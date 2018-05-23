@@ -1,0 +1,7 @@
+"
+" ~/.vimrc
+"
+set modeline
+syn on
+colorscheme ron
+filetype indent plugin on
