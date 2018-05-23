@@ -1,0 +1,29 @@
+#
+# /etc/chrony/chrony.conf
+#
+
+# ntp servers
+{% for ntp_server in ntp_servers %}
+{{ ntp_server.type }} {{ ntp_server.name }} {{ ntp_server.options }}
+{% endfor %}
+
+# keystore for ntp authentication
+keyfile /etc/chrony/chrony.keys
+
+# rate information file
+driftfile /var/lib/chrony/chrony.drift
+
+# log file location
+logdir /var/log/chrony
+
+# stop upsetting the system clock with bad estimates
+maxupdateskew 100.0
+
+# parse 'adjtime' file to find out if UTC is used by local clock
+hwclockfile /etc/adjtime
+
+# enable kernel sync (every 11 minutes)
+rtcsync
+
+# step clock instead of slewing it if the adjustment is larger than one second
+makestep 1 3

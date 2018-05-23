@@ -1,0 +1,31 @@
+---
+#
+# file: roles/common/defaults/main.yml
+#
+
+# language specific configs for vim's ftplugin
+ftplugin_settings:
+  - name: python
+    shiftwidth: 4
+    tabstop: 4
+    softtabstop: 4
+  - name: php
+    shiftwidth: 2
+    tabstop: 2
+    softtabstop: 2
+  - name: html
+    shiftwidth: 2
+    tabstop: 2
+    softtabstop: 2
+  - name: sh
+    shiftwidth: 2
+    tabstop: 2
+    softtabstop: 2
+  - name: json
+    shiftwidth: 2
+    tabstop: 2
+    softtabstop: 2
+  - name: yaml
+    shiftwidth: 2
+    tabstop: 2
+    softtabstop: 2

@@ -1,0 +1,15 @@
+#
+# ~/.bashrc
+#
+set -o vi
+shopt -s extglob
+alias ls='ls --color=auto'
+alias ll='ls -lhAtr'
+alias grep='grep --color=always'
+NMON=cmndt
+EDITOR=vi
+PAGER=less
+HISTSIZE=10000
+HISTCONTROL=ignoredups:erasedups
+PS1='{{ item.prompt }}'
+export PS1 NMON EDITOR PAGER HISTSIZE HISTCONTROL

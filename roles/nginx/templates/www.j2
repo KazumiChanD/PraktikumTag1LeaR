@@ -1,0 +1,22 @@
+server {
+  listen 80;
+  server_name _;
+
+  root /vagrant;
+
+  index index.html index.php;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  location ~ \.php$ {
+    include fastcgi.conf;
+    include fastcgi_params;
+    fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+  }
+
+  location ~ /Vagrantfile {
+    deny all;
+  }
+}
