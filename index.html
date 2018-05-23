@@ -55,29 +55,29 @@ Ihr wollt aber auch kein Billig Zeug kaufen,</p>
 
 <article>
   <p>Fragen und Vorschläge könnt Ihr gerne dort ein reichen.</p>
-  <p><form action="formular.php">
+  <p><form action="formular.php" method="post" autocomplete="off">
     <label>Anrede:
-      <select form of adress="top2" size="1">
+      <select name="anrede" size="1">
         <option>Frau</option>
         <option>Herr</option>
       </select>
     </label>
   </p>
 
-  <p><label>Email:</label>
-    <input type="text" email="email" id="email" maxlength="25">
+  <label>Email:</label>
+    <input type="email" name="email" maxlength="25">
+  <br>
+  <label>Name:</label>
+    <input type="text" name="name" maxlength="35">
+  <br>
+  <label>Betreff:</label>
+    <input type ="text" name="betreff" maxlength="45">
+  <br>
+  <label>Nachricht:</label>
+    <p><textarea type="text" name="nachricht"></textarea>
   </p>
-  <p><label>Name:</label>
-    <input type="text" name="name" id="name" maxlength="35">
-  </p>
-  <p><label>Betreff:</label>
-    <input type ="text" subject="betreff" id="betreff" maxlength="45">
-  </p>
-  <p><label>Nachricht:</label>
-    <textarea></textarea>
-  </p>
-  <p><button type="reset">Eingaben zurücksetzten</button></p>
-  <p><button type="submit">Eingaben absenden</button></p>
+  <button type="reset">Eingaben zurücksetzten</button>
+  <button type="submit">Eingaben absenden</button>
   </form>
 </article>
 
