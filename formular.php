@@ -1,7 +1,5 @@
 <?php
 
- mail($empfaenger_email, $betreff, $nachricht, "From: Absender <leareimann1999@web.de>");
-
 $anrede = $_POST ["anrede"];
 $name = $_POST ["name"];
 if($name!="")
@@ -55,14 +53,15 @@ else
   echo "Bitte geben Sie einen Betreff an.";
   }
 $nachricht = $_POST ["nachricht"];
-if($enachricht!="")
+if($nachricht!="")
   {
-  echo "Vielen Dank";
+  echo "";
   }
 else
   {
   echo "Bitte geben Sie eine Nachricht ein.";
   }
 
-echo "Anrede: $anrede Email: $email Name: $name Betreff: $betreff Nachricht: $nachricht";
+echo "Anrede: $anrede , Name: $name , Email: $email , Betreff: $betreff , Nachricht: $nachricht";
+mail($empfaenger_email, $betreff, $nachricht, "From: Absender <leareimann1999@web.de>");
 ?>
