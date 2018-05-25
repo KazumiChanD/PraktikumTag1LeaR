@@ -1,5 +1,4 @@
-<script>
-    var elem = document.getElementById('los');
+  var elem = document.getElementById('los');
     elem.addEventListener('click', chkFormular);
 
 function chkFormular() {
@@ -24,4 +23,3 @@ function chkFormular() {
     document.Formular.email.focus();
     return false;
 }
-</script>
