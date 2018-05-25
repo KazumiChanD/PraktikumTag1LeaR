@@ -1,5 +1,0 @@
-#
-# ~/.bash_profile
-#
-test -d ~/bin && export PATH=${PATH}:~/bin
-test -f ~/.bashrc && . ~/.bashrc
