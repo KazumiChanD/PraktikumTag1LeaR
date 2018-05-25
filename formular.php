@@ -1,5 +1,14 @@
 <?php
 
+echo 'PHP? Funktioniert! Version ist: ', phpversion(), "\n";
+
+$empfaenger = "SilverDarkside@t-online.de";
+$absendername = "Kontaktformular";
+$absendermail = "SilverDarkside@t-online.de";
+$betreff = "betreff";
+$nachricht = "nachricht";
+mail($anrede, $name, $betreff, $nachricht, "From: $empfaenger <$absendermail>");
+
 $anrede = $_POST ["anrede"];
 $name = $_POST ["name"];
 if($name!="")
