@@ -1,0 +1,26 @@
+---
+#
+# file: roles/sysstat/tasks/main.yml
+#
+- name: install sysstat
+  apt:
+    cache_valid_time: 3600
+    name: sysstat
+    state: present
+- name: enable sysstat
+  systemd:
+    name: sysstat
+    enabled: true
+    masked: false
+- name: configure sysstat
+  replace:
+    regexp: '^ENABLED="false"'
+    replace: 'ENABLED="true"'
+    path: /etc/default/sysstat
+  register: sysstat_config
+- name: restart sysstat
+  systemd:
+    name: sysstat
+    state: restarted
+  when:
+    - sysstat_config.changed

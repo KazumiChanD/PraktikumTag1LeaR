@@ -5,10 +5,38 @@
   <link rel="stylesheet" href="./css/index.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
 </head>
-
+  
 <body>
+
+<script>
+    var elem = document.getElementById('los');
+    elem.addEventListener('click', chkFormular);
+
+function chkFormular() {
+	
+  if (document.Formular.name.value == "") {
+    alert("Bitte Ihren Namen eingeben!");
+    document.Formular.name.focus();
+    return false;
+  }
+  if (document.Formular.betreff.value == "") {
+    alert("Bitte einen Betreff eingeben!");
+    document.Formular.betreff.focus();
+    return false;
+  }
+  if (document.Formular.email.value == "") {
+    alert("Bitte Ihre E-Mail-Adresse eingeben!");
+    document.Formular.email.focus();
+    return false;
+  }
+  if (document.Formular.email.value.indexOf("@") == -1) {
+    alert("Keine E-Mail-Adresse!");
+    document.Formular.email.focus();
+    return false;
+}
+</script>
   <header>
     <h3><strong>Katzenschmauß</strong></h3>
     <p>Günstig, Gesund und Frisch</p>
@@ -80,7 +108,6 @@ Ihr wollt aber auch kein Billig Zeug kaufen,</p>
   <button type="reset">Eingaben zurücksetzten</button>
   <button type="submit" id="los">Eingaben absenden</button>
 </form></p>
-<script src="html.js"></script>
 </article>
 
 <!-- Signatur -->

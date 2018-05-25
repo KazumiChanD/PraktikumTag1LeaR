@@ -1,0 +1,48 @@
+---
+#
+# file: playbook.yml
+#
+- name: ensure python is present
+  hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - name: ensure python is present
+      raw: test -f /usr/bin/python || apt-get update -qqy && apt-get install python -qqy
+- name: postinstall config
+  hosts: all
+  become: true
+  vars:
+    pkg_list:
+      - apt-transport-https
+      - bzip2
+      - curl
+      - dbus
+      - less
+      - lsof
+      - man
+      - php-cli
+      - unzip
+      - zip
+    ntp_servers:
+      - type: server
+        name: 0.debian.pool.ntp.org
+        options: iburst
+    accounts:
+      - name: root
+        shell: /bin/bash
+        home: /root
+        prompt: '\033[1;31m\h:\w$ \033[0m'
+        password: $6$9/ck1iJ/FKzrA.Lm$4l7uygngIc45uFjCGTotUvJNG7Rc1b4xg6./ABt75/pITnwqbKeDS/6MNZtSI.Ab6qry/kDikMS2lemNh33x3.
+        ssh_keys: []
+      - name: vagrant
+        shell: /bin/bash
+        home: /home/vagrant
+        prompt: '\033[1;32m\h:\w$ \033[0m'
+        password: $6$mhQIb4mR.WkXykyN$2VDuNnG5kfWPq3EFkGWT8IXM1HI8C1UDy8k2DYIuYPG7.JA1yFEL0YiyopzF309yaQrLyLvCxjaG.3VPCCiCU0
+        ssh_keys: []
+  roles:
+    - { role: 'common', tags: ['setup', 'common'] }
+    - { role: 'sysstat', tags: ['setup', 'sysstat'] }
+    - { role: 'chrony', tags: ['setup', 'chrony'] }
+    - { role: 'nginx', tags: ['setup', 'nginx'] }

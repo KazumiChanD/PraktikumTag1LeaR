@@ -1,0 +1,56 @@
+---
+#
+# file: roles/nginx/tasks/main.yml
+#
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: link htdocs
+  file:
+    state: link
+    src: /vagrant
+    dest: '{{ item.home }}/htdocs'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+  with_items:
+    - '{{ accounts }}'
+
+- name: remove nginx default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: install php
+  apt:
+    name: php7.2-fpm
+    state: present
+
+- name: install nginx www site
+  template:
+    src: www.j2
+    dest: /etc/nginx/sites-available/www
+    owner: root
+    group: root
+    mode: 0644
+
+- name: link nginx www site
+  file:
+    src: /etc/nginx/sites-available/www
+    dest: /etc/nginx/sites-enabled/www.conf
+    state: link
+
+- name: enable and restart php-fpm
+  systemd:
+    name: php7.2-fpm
+    state: restarted
+    enabled: yes
+    masked: no
+
+- name: enable and restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+    masked: no

@@ -1,0 +1,34 @@
+---
+#
+# file: roles/chrony/tasks/main.yml
+#
+- name: uninstall ntp
+  apt:
+    cache_valid_time: 3600
+    name: ntp
+    state: absent
+  register: ntp_pkg
+- name: install chrony
+  apt:
+    cache_valid_time: 3600
+    name: chrony
+    state: present
+- name: enable chrony
+  systemd:
+    name: chrony
+    enabled: true
+    masked: false
+- name: configure chrony
+  template:
+    src: chrony.j2
+    dest: /etc/chrony/chrony.conf
+    owner: root
+    group: root
+    mode: 0644
+  register: chrony_config
+- name: restart chrony
+  systemd:
+    name: chrony
+    state: restarted
+  when:
+    - chrony_config.changed

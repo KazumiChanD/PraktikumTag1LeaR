@@ -1,0 +1,112 @@
+---
+#
+# file: roles/common/tasks/main.yml
+#
+- name: configure apt-proxy
+  template:
+    src: apt_proxy.j2
+    dest: /etc/apt/apt.conf.d/66apt-proxy
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - apt_proxy is defined
+    - apt_proxy.address not in ansible_all_ipv4_addresses
+- name: install software packages
+  apt:
+    cache_valid_time: 3600
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - '{{ pkg_list |default([]) }}'
+- name: configure timezone
+  timezone:
+    name: Europe/Berlin
+  register: tzdata
+- name: restart cron if necessary
+  systemd:
+    name: cron
+    state: restarted
+  when:
+    - tzdata.changed
+- name: configure users
+  user:
+    name: '{{ item.name }}'
+    shell: '{{ item.shell }}'
+    password: '{{ item.password }}'
+  with_items:
+    - '{{ accounts |default([]) }}'
+- name: setup ssh-keys
+  authorized_key:
+    user: '{{ item.0.name }}'
+    state: '{{ item.1.state }}'
+    key: '{{ item.1.key }}'
+  with_subelements:
+    - '{{ accounts |default([]) }}'
+    - ssh_keys
+
+- name: setup .bashrc
+  template:
+    src: bashrc.j2
+    dest: '{{ item.home }}/.bashrc'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 0600
+  with_items:
+    - '{{ accounts |default([]) }}'
+- name: setup .bash_profile
+  copy:
+    src: bash_profile
+    dest: '{{ item.home }}/.bash_profile'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 0600
+  with_items:
+    - '{{ accounts |default([]) }}'
+- name: setup .inputrc
+  copy:
+    src: inputrc
+    dest: '{{ item.home }}/.inputrc'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 0600
+  with_items:
+    - '{{ accounts |default([]) }}'
+- name: setup .vimrc
+  copy:
+    src: vimrc
+    dest: '{{ item.home }}/.vimrc'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 0600
+  with_items:
+    - '{{ accounts |default([]) }}'
+- name: create ~/.vim folder
+  file:
+    state: directory
+    path: '{{ item.home }}/.vim'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 0700
+  with_items:
+    - '{{ accounts |default([]) }}'
+- name: create ~/.vim/ftplugin folder
+  file:
+    state: directory
+    path: '{{ item.home }}/.vim/ftplugin'
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 0700
+  with_items:
+    - '{{ accounts |default([]) }}'
+
+- name: install filetype indent plugin configss
+  template:
+    src: ftplugin.j2
+    dest: '{{ item.0.home }}/.vim/ftplugin/{{ item.1.name }}.vim'
+    owner: '{{ item.0.name }}'
+    group: '{{ item.0.name }}'
+    mode: 0600
+  with_nested:
+    - '{{ accounts |default([]) }}'
+    - '{{ ftplugin_settings }}'
