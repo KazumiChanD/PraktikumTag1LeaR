@@ -1,23 +1,16 @@
 <?php
 
-echo 'PHP? Funktioniert! Version ist: ', phpversion(), "\n";
-
-$empfaenger = "SilverDarkside@t-online.de";
-$absendername = "Kontaktformular";
-$absendermail = "SilverDarkside@t-online.de";
-$betreff = "betreff";
-$nachricht = "nachricht";
-mail($anrede, $name, $betreff, $nachricht, "From: $empfaenger <$absendermail>");
+ mail($empfaenger_email, $betreff, $nachricht, "From: Absender <leareimann1999@web.de>");
 
 $anrede = $_POST ["anrede"];
 $name = $_POST ["name"];
 if($name!="")
   {
-  echo "Vielen Dank"
+  echo "";
   }
 else {
   {
-  echo "Bitte geben Sie einen Namen ein."
+  echo "Bitte geben Sie einen Namen ein.";
   }
 }
 function check_email($email)
@@ -46,29 +39,29 @@ function check_email($email)
 $email = $_POST ["email"];
 if($email!="")
   {
-  echo "Vielen Dank"
+  echo "";
   }
 else
   {
-  echo "Bitte geben Sie eine Email Adresse an."
+  echo "Bitte geben Sie eine Email Adresse an.";
   }
 $betreff = $_POST ["betreff"];
 if($betreff!="")
   {
-  echo "Vielen Dank"
+  echo "";
   }
 else
   {
-  echo "Bitte geben Sie einen Betreff an."
+  echo "Bitte geben Sie einen Betreff an.";
   }
 $nachricht = $_POST ["nachricht"];
 if($enachricht!="")
   {
-  echo "Vielen Dank"
+  echo "Vielen Dank";
   }
 else
   {
-  echo "Bitte geben Sie eine Nachricht ein."
+  echo "Bitte geben Sie eine Nachricht ein.";
   }
 
 echo "Anrede: $anrede Email: $email Name: $name Betreff: $betreff Nachricht: $nachricht";
